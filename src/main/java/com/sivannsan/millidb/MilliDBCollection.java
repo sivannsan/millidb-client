@@ -8,27 +8,33 @@ import java.util.List;
  * The instance of this class does not locally work with the data.
  * It always communicates with the database.
  */
-public interface MilliDBClient {
+public interface MilliDBCollection extends MilliDBFile, Iterable<MilliDBFile> {
     /**
-     * The same as MilliDBCollection#getFiles, but they are root
+     * Get a list of permitted MilliDBFiles.
      */
     @Nonnull
     List<MilliDBFile> getFiles() throws MilliDBResultFailedException;
 
     /**
-     * The same as MilliDBCollection#getFiles, but they are root
+     * Get a list of permitted MilliDBFiles if each of them goes with the filter.
      */
     @Nonnull
     List<MilliDBFile> getFiles(MilliDBFilter filter) throws MilliDBResultFailedException;
 
     /**
-     * The same as MilliDBCollection#getDocument, but it is root
+     * Get a permitted MilliDBDocument.
+     * If it does not exist, it will automatically create for you.
+     *
+     * @param name  must end with .mll extension
      */
     @Nonnull
     MilliDBDocument getDocument(@Nonnull String name) throws MilliDBResultFailedException, MilliDBPermissionException;
 
     /**
-     * The same as MilliDBCollection#getCollection, but it is root
+     * Get a permitted MilliDBCollection.
+     * If it does not exist, it will automatically create for you.
+     *
+     * @param name  must NOT end with .mll extension
      */
     @Nonnull
     MilliDBCollection getCollection(@Nonnull String name) throws MilliDBResultFailedException, MilliDBPermissionException;
